@@ -1,32 +1,51 @@
-<nav class="d-flex navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand mx-5" href="home.html">&#x1F351 Review of Peaches</a>
-    <div class="mx-5">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<nav class="d-flex navbar navbar-expand-sm">
+  <div class="container">
+    <!--홈-->
+    <a class="navbar-brand text-light" href="{% url 'articles:index'%}">&#x1F351 pboard</a>
+    <!--홈 end-->
+    <!--네브바 우측 콘텐츠-->
+    <div>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
+          <!--serch 이동-->
           <li class="nav-item">
-            <a class="nav-link active" href="#">Algorithm</a>
+            <a class="nav-link active text-light" href="#">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Django</a>
+          <!--search end-->
+          
+          <!--로그인 상태-->
+          {% if request.user.is_authenticated %}
+          <li class="nav-item ms-3">
+            <!--글쓰기 버튼-->
+            <a class="nav-link active text-light" href="{% url 'articles:create' %}">
+              <i class="fa-regular fa-pen-to-square"></i>
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">SQL</a>
+          <!--글쓰기 버튼 end-->
+          <!--개인정보-->
+          <li class="nav-item ms-3">
+            <a class="nav-link active text-light" href="{% url 'accounts:update'%}">
+              <i class="fa-regular fa-circle-user"></i>
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">HTML & CSS</a>
+          <!--개인정보 end-->
+
+          <!--로그인 상태 X-->
+          {% else %}
+          <li class="nav-item ms-3">
+          <!--로그인-->
+            <!-- login.html include-->
+            <a class="nav-link active text-light" href="{% url 'accounts:login'%}">
+              <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            </a>
+          <!--로그인 end-->  
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">JS & Vue.js</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" style="color: #d6d6d6" href="#" data-bs-toggle="modal" data-bs-target=#Mymodal>LOGIN</a>
-          </li>
+          {% endif %}
         </ul>
       </div>
     </div>
   </div>
+  <!--네브바 우측 콘텐츠 end-->
 </nav>

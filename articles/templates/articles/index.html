@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>게시판 리스트</h1>
-<a href="{% url 'articles:create' %}">CREATE</a>
-<hr>
-{% for article in articles %}
-  <p>{{ article.title }}</p>
-  <a href="{% url 'articles:detail' article.pk %}">상세 페이지</a>
-  <hr>
-{% endfor %}
+<div class="container my-5">
+  <h5 class="text-light"><i class="fa-regular fa-clock"></i> Recent</h5><br>
+  <div class="row justify-content-between">
+    {% for article in articles %}
+    <!--card 형식으로 context 보여주기-->
+    <div class="card text-bg-dark mb-4" style="max-width: 18rem;">
+      <div class="card-body">
+        <a href="{% url 'articles:detail' article.pk %}" class="card-title">{{ article.title }} <== 글 제목 + 해결완료</a>
+        <h6 class="card-subtitle mb-2 text-muted">문제 번호</h6>
+        <p class="card-text">{{ article.created_at }}</p>
+        <hr>
+        <p class="card-text">여기에 이름을 넣어볼까</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock content %}

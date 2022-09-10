@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
+from django.contrib.auth.decorators import login_required
 from .models import Article
 from .forms import ArticleForm
 
@@ -12,7 +13,7 @@ def index(request):
     }
     return render(request, 'articles/index.html', context)
 
-
+@login_required
 @require_http_methods(['GET', 'POST'])
 def create(request):
     if request.method == 'POST':
@@ -27,7 +28,7 @@ def create(request):
     }
     return render(request, 'articles/create.html', context)
 
-
+@login_required
 @require_safe
 def detail(request, pk):
     article = Article.objects.get(pk=pk)
@@ -36,16 +37,11 @@ def detail(request, pk):
     }
     return render(request, 'articles/detail.html', context)
 
-
+@login_required
 @require_http_methods(['GET', 'POST'])
 def update(request, pk):
     article = Article.objects.get(pk=pk)
     if request.method == 'POST':
-        print()
-        print()
-        print('여기까지')
-        print()
-        print()
         form = ArticleForm(request.POST, instance=article)
         # form = ArticleForm(data=request.POST, instance=article)
         if form.is_valid():
@@ -59,7 +55,7 @@ def update(request, pk):
     }
     return render(request, 'articles/update.html', context)
 
-
+@login_required
 @require_POST
 def delete(request, pk):
     article = Article.objects.get(pk=pk)
