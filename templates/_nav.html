@@ -1,7 +1,10 @@
-<nav class="d-flex navbar navbar-expand-sm">
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/font.css' %}" >
+
+<nav class="d-flex navbar navbar-expand">
   <div class="container">
     <!--홈-->
-    <a class="navbar-brand text-light" href="{% url 'articles:index'%}">&#x1F351 pboard</a>
+    <a class="navbar-brand text-light" style="font-family: '777Balsamtint;'" href="{% url 'articles:index'%}">&#x1F351 pboard</a>
     <!--홈 end-->
     <!--네브바 우측 콘텐츠-->
     <div>

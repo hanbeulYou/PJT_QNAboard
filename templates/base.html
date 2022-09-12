@@ -24,20 +24,10 @@
 
   <div class="container">
     <div class="row">
-      {% comment %}
-      <h3>{{ user }}</h3>
-      <form action="{% url 'accounts:delete' %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="delete">
-      </form>
-      
-      <form action="{% url 'accounts:logout' %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="logout">
-      </form>
-      {% endcomment %}
+      <div class="container my-5">
       {% block content %}
       {% endblock content %}
+      </div>
     </div>
   </div>
 

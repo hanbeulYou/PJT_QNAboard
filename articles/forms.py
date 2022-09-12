@@ -1,5 +1,5 @@
 from django import forms
-from .models import Article
+from .models import Article, Comment
 from django_summernote.widgets import SummernoteWidget
 from djangocodemirror.fields import CodeMirrorWidget
 # from codemirror.widgets import CodeMirror
@@ -34,6 +34,10 @@ class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = '__all__'
-#        widgets = {
-#            'content': SummernoteWidget(),
-#        }
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta: 
+        model = Comment
+        exclude = ('article', 'user',)

@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>CREATE</h1>
-  <form action="{% url 'articles:update' article.pk %}" method="POST">
+  <h1>DETAIL</h1>
+  {% load djangocodemirror_tags %}
+  <form action="{% url 'articles:create' %}" method="POST" novalidate>
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit">
+    <input type="submit" value="작성하기">
   </form>
   <hr>
   <a href="{% url 'articles:index' %}">뒤로가기</a>
+
+  {% codemirror_field_css_assets form.code %}
+  {% codemirror_field_js_assets form.code %}
+  <script>
+    var code_codemirror = CodeMirror.fromTextArea(
+        document.getElementById("id_code"),
+        {{ form.code|codemirror_parameters }}
+    );
+</script>
 {% endblock content %}

@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>DETAIL</h1>
-  <h2>{{ article.pk }}번째 글입니다.</h2>
-  <hr>
-  <div>{{ article.content | safe }}</div>
+<div class="container col-8">
+  <h3>{{ article.title }}</h3><br>
+  <div id="summernote">{{ article.content | safe }}</div>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/prism.min.js"></script>
@@ -13,9 +12,40 @@
   <pre><code class="language-python"><div>{{ article.code }}</div></code></pre>
   <hr>
   <a href="{% url 'articles:index' %}">뒤로가기</a>
-  <a href="{% url 'articles:update' article.pk %}">UPDATE</a>
-  <form action="{% url 'articles:delete' article.pk %}" method="POST">
+  {% if user == article.user %}
+    <a href="{% url 'articles:update' article.pk %}">UPDATE</a>
+    <form action="{% url 'articles:delete' article.pk %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="DELETE" onclick="return confirm('정말 삭제하시겠습니까?')">
+    </form>
+  {% endif %}
+  
+  <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
+  <ul>
+    {% for comment in comments %}
+    <li>
+      {{ comment.user }} - {{ comment.content }}
+      {% if user == comment.user %}
+        <form action="{% url 'articles:comments_delete' article.pk comment.pk %}" method="POST" class="d-inline">
+          {% csrf_token %}
+          <input type="submit" value="DELETE">
+        </form>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+
+
+<!--create-->
+{% if request.user.is_authenticated %}
+  <form action="{% url 'articles:comments_create' article.pk %}" method="POST">
     {% csrf_token %}
-    <input type="submit" value="DELETE" onclick="return confirm('정말 삭제하시겠습니까?')">
+    {{ comment_form }}
+    <input type="submit">
   </form>
+{% else %}
+  <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
+{% endif %}
+
+</div>
 {% endblock content %}
