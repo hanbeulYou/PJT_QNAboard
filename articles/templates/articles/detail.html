@@ -35,7 +35,6 @@
     {% endfor %}
   </ul>
 
-
 <!--create-->
 {% if request.user.is_authenticated %}
   <form action="{% url 'articles:comments_create' article.pk %}" method="POST">
