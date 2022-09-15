@@ -33,12 +33,11 @@ def create(request):
     }
     return render(request, 'articles/create.html', context)
 
-@login_required
 @require_safe
 def detail(request, pk):
     article = Article.objects.get(pk=pk)
     comment_form = CommentForm()
-    comments = Comment.objects.all()
+    comments = Comment.objects.filter(article_id=pk)
     context = {
         'article': article,
         'comments': comments,
@@ -89,6 +88,7 @@ def comments_create(request, pk):
     return redirect('accounts:login')
 
 
+@login_required
 @require_POST
 def comments_delete(request, pk, comment_pk):
     if request.user.is_authenticated:
